@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.9"
+  },
+  "scripts" : {
+    "start" : "cross-env NODE_PATH=src node src",
+    "start:dev" : "cross-env NODE_PATH=src nodemon --watch src/ src/index.js"
+  }
+}
