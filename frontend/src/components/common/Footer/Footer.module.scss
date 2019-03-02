@@ -1,0 +1,48 @@
+@import 'styles/utils.scss';
+
+.footer {
+  position: relative;
+  background: $oc-gray-7;
+  height: 10rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include media("<medium") {
+    justify-content: flex-start;
+    padding-left: 2rem;
+  }
+
+  @include media("<515px") {
+    justify-content: center;
+    .dev-info {
+      display: none;
+    }
+  }
+
+  .logo {
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .dev-info {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+
+    font-weight: 600;
+    font-size: .8rem;
+    color: rgba(255, 255, 255, .8);
+
+    ul {
+      list-style: none;
+
+      li {
+        margin: .3rem 0;
+      }
+    }
+  }
+}
