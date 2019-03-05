@@ -1,7 +1,58 @@
 @import 'styles/utils.scss';
 
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+:global {
+  .p1 {
+    animation: fadeIn 1.5s;
+  }
+  .p2 {
+    animation: fadeIn 2s;
+  }
+  .p3 {
+    padding-bottom: 2rem;
+
+    animation: fadeIn 2.5s;
+  }
+  .p4 {
+    padding-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-top: solid .5px $oc-gray-6;
+
+    animation: fadeIn 3s;
+  }
+  .btn {
+    animation: fadeIn 3s;
+    padding-bottom: 5rem;
+  }
+}
+
 :local {
   .main-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
+    width: 500px;
+    padding: 1rem 2rem;
+
+    .main-content {
+      width: 100%;
+      font-size: 3rem;
+      text-align: center;
+
+      font-weight: 300;
+      color: $oc-gray-7;
+
+      span {
+        font-weight: 500;
+      }
+    }
   }
 }

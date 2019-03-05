@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { EditorPage, JoinPage, ListPage, MainPage, NotFoundPage, PostPage } from 'pages';
-// import aaaa from './01.png';
-// import cccc from './그림04.png';
 
 class App extends Component {
   render() {

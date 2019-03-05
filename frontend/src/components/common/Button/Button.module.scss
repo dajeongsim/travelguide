@@ -45,6 +45,13 @@
     }
   }
 
+  // big
+  &.big {
+    padding: .5rem 2rem;
+    font-weight: 600;
+    font-size: 1.7rem;
+  }
+
   // disabled
   &.disabled {
     background: $oc-gray-4;

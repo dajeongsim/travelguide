@@ -4,10 +4,10 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-const MainWrapper = () => {
-  return (
-    <div className={cx('main-wrapper')}></div>
-  );
-}
+const MainWrapper = ({children}) => (
+  <div className={cx('main-wrapper')}>
+    {children}
+  </div>
+);
 
 export default MainWrapper;

@@ -2,6 +2,19 @@
 
 :local {
   .main-wrapper {
+    display: flex;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    width: 1024px;
 
+    align-items: center;
+    justify-content: center;
+
+    @include media("<large") {
+      width: 100%;
+    }
+    @include media("<890px") {
+      flex-direction: column;
+    }
   }
 }
