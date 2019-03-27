@@ -2,6 +2,40 @@
 
 :local {
   .register {
+    margin: 0 auto;
+    padding: 3.5rem;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    background-color: $oc-gray-0;
+
+    @include material-shadow(2, .5);
+
+    h2 {
+      margin: 0 0 .5rem;
+
+      text-align: center;
+    }
+
+    input {
+      display: block;
+      margin: 0 auto .5rem;
+      padding: .5rem .3rem;
+    }
+
+    .login-info {
+      width: 300px;
+      margin: 1rem 0 .5rem;
+      padding: 2rem 0 1.5rem;
+
+      border-top: solid 1px $oc-gray-5;
+      border-bottom: solid 1px $oc-gray-5;
+    }
+
+    .user-info {
+      padding: 1.5rem 0;
+    }
   }
 }
