@@ -2,6 +2,50 @@
 
 :local {
   .category {
+    // position: fixed;
+    width: 150px;
 
+    background: $oc-blue-1;
+
+    .category-title {
+      padding: .9rem .5rem .5rem;
+      text-align: center;
+
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    hr {
+      width: 130px;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0 0 .5rem;
+
+      list-style: none;
+
+      li {
+        text-align: center;
+
+        &:hover {
+          background: $oc-blue-3;
+        }
+        &:active {
+          background-color: $oc-blue-2;
+        }
+
+        a {
+          display: block;
+          width: 100%;
+          padding: .6rem;
+        }
+
+        .active {
+          background: $oc-blue-4;
+          color: #ffffff;
+        }
+      }
+    }
   }
 }

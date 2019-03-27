@@ -14,7 +14,7 @@ const MainBody = () => (
       <p className={cx('p4')}>지금 바로 시작하세요</p>
     </div>
     <div className={cx('btn')}>
-      <Button to='/page/:page?' big>전체보기</Button>
+      <Button to='/category=0/page/:page?' big>전체보기</Button>
     </div>
   </div>
 );

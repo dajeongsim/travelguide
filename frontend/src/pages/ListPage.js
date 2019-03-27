@@ -1,8 +1,17 @@
 import React from 'react';
+import PageTemplate from 'components/common/PageTemplate';
+import ListWrapper from 'components/list/ListWrapper';
+// import Category from 'components/list/Category';
 
 const ListPage = () => {
   return (
-    <div>List</div>
+    <div>
+      <PageTemplate>
+        <ListWrapper>
+          {/*<Category />*/}
+        </ListWrapper>
+      </PageTemplate>
+    </div>
   );
 }
 

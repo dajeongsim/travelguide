@@ -2,6 +2,21 @@
 
 :local {
   .list-wrapper {
+    margin: 0 auto;
+    width: 1200px;
+    min-width: 1024px;
+    display: flex;
 
+    background-color: $oc-gray-0;
+
+    @include material-shadow(2, .5);
+
+    .list-content {
+      flex: 1;
+    }
+
+    @include media("<1200px") {
+      width: 100%;
+    }
   }
 }

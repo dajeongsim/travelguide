@@ -8,7 +8,7 @@ class App extends Component {
       <div className="App">
       <Switch>
         <Route exact path="/" component={MainPage} />
-        <Route path="/page/:page" component={ListPage} />
+        <Route path="/category=:category/page/:page" component={ListPage} />
         <Route path="/tag/:tag/:page?" component={ListPage} />
         <Route path="/post/:id" component={PostPage} />
         <Route path="/editor" component={EditorPage} />

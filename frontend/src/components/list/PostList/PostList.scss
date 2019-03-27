@@ -2,6 +2,57 @@
 
 :local {
   .post-list {
+    padding: 0 5rem;
+    width: 100%;
 
+    .list-header {
+      display: flex;
+      align-items: center;
+
+      .right {
+        margin-left: auto;
+      }
+    }
+
+    table {
+      margin: 1rem 0;
+      width: 100%;
+
+      text-align: center;
+      font-size: .9rem;
+
+      border-collapse: collapse;
+
+      caption {
+        display: none;
+      }
+      thead {
+        border-top: solid 3px $oc-gray-6;
+        border-bottom: solid 2px $oc-gray-5;
+        background-color: $oc-gray-2;
+
+        th {
+          padding: 1rem 0;
+        }
+      }
+
+      tbody {
+        border-bottom: solid 2px $oc-gray-5;
+
+        tr:hover {
+          background-color: $oc-gray-1;
+          cursor: pointer;
+        }
+
+        tr:active {
+          background-color: $oc-gray-3;
+        }
+
+        td {
+          padding: 1rem 0;
+          border-bottom: solid 1px $oc-gray-4;
+        }
+      }
+    }
   }
 }
