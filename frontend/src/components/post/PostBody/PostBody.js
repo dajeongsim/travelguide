@@ -6,7 +6,9 @@ const cx = classNames.bind(styles);
 
 const PostBody = () => {
   return (
-    <div className={cx('post-body')}></div>
+    <div className={cx('post-body')}>
+      <div className={cx('contents')}>내용</div>
+    </div>
   );
 }
 

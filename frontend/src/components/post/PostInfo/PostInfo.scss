@@ -2,6 +2,81 @@
 
 :local {
   .post-info {
+    height: 22rem;
 
+    background-color: $oc-blue-6;
+    color: $oc-gray-1;
+
+    .info {
+      display: flex;
+      margin: 0 auto;
+      padding-top: 2rem;
+      width: 1024px;
+
+      .left {
+        h1 {
+          margin: 0;
+          padding: 2rem 1rem 1rem;
+
+          font-size: 2.5rem;
+          font-weight: 400;
+        }
+
+        .tags {
+          padding: 1rem;
+          font-size: 1.2rem;
+        }
+
+        .other-buttons {
+          display: flex;
+
+          div {
+            padding: 1rem;
+          }
+        }
+      }
+
+      .right {
+        margin-left: auto;
+        padding: 1rem 0;
+
+        text-align: right;
+
+        .btn {
+          margin: 1rem .5rem;
+        }
+
+        .date {
+          padding: .5rem 1rem;
+          font-size: 1.5rem;
+          font-style: italic;
+        }
+
+        .writer {
+          padding: .5rem 1rem;
+        }
+
+        .hit-like {
+          padding: 3rem 1rem;
+          font-weight: bold;
+        }
+      }
+    }
+
+    @include media("<large") {
+      .info {
+        width: 768px;
+
+        .left .tags, .right .date {
+            font-size: 1rem;
+        }
+      }
+    }
+
+    @include media("<medium") {
+      .info {
+        width: calc(100% - 2rem);
+      }
+    }
   }
 }
