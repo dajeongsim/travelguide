@@ -5,4 +5,8 @@
     background: $oc-gray-1;
     min-height: calc(100vh - 15rem);
   }
+
+  &.list {
+    min-width: 768px;
+  }
 }

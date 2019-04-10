@@ -3,8 +3,9 @@
 :local {
   .list-wrapper {
     margin: 0 auto;
-    width: 1200px;
-    min-width: 1024px;
+    width: 1400px;
+    min-width: 760px;
+    box-sizing: border-box;
     display: flex;
 
     background-color: $oc-gray-0;
@@ -12,11 +13,18 @@
     @include material-shadow(2, .5);
 
     .list-content {
+      padding: 0 5rem;
       flex: 1;
     }
 
-    @include media("<1200px") {
+    @include media("<wide") {
       width: 100%;
+    }
+
+    @include media("<large") {
+      .list-content {
+        padding: 0 2rem;
+      }
     }
   }
 }

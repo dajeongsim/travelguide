@@ -2,6 +2,14 @@
 
 :local {
   .comment-template {
+    margin: 0 auto;
+    width: 1024px;
+    transform: translateY(-2.5rem);
 
+    background-color: $oc-gray-2;
+    border: 1px solid $oc-gray-4;
+
+    @include media("<large") { width: 768px; }
+    @include media("<medium") { width: calc(100% - 2rem); }
   }
 }

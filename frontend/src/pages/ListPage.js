@@ -6,7 +6,7 @@ import ListWrapper from 'components/list/ListWrapper';
 const ListPage = () => {
   return (
     <div>
-      <PageTemplate>
+      <PageTemplate list>
         <ListWrapper>
           {/*<Category />*/}
         </ListWrapper>

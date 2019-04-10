@@ -2,6 +2,38 @@
 
 :local {
   .comment-list {
+    padding: .5rem 1rem;
 
+    .comment-item {
+      padding-top: .5rem;
+      border-bottom: 1px dashed $oc-gray-5;
+
+      &.parent {
+        padding-left: 2rem;
+      }
+
+      .writer {
+        display: inline-block;
+        padding-right: .5rem;
+        font-weight: 500;
+      }
+
+      .date-time {
+        display: inline-block;
+        padding-right: 1rem;
+        font-size: .8rem;
+        opacity: .7;
+      }
+
+      .reply {
+        display: inline-block;
+        font-size: .9rem;
+      }
+
+      .body {
+        padding: .5rem;
+        font-size: .9rem;
+      }
+    }
   }
 }

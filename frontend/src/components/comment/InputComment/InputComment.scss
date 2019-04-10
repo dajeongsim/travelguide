@@ -2,6 +2,20 @@
 
 :local {
   .input-comment {
+    padding: .5rem 1rem 1rem;
+    display: flex;
+    justify-content: center;
 
+    .input-body {
+      height: 3.5rem;
+      box-sizing: border-box;
+      resize: none;
+      flex: 1;
+    }
+
+    .btn {
+      margin-left: .2rem;
+      line-height: 3rem;
+    }
   }
 }

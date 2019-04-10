@@ -37,5 +37,13 @@
     .user-info {
       padding: 1.5rem 0;
     }
+
+    @include media("<large") {
+      width: 600px;
+    }
+
+    @include media("<medium") {
+      width: 100%;
+    }
   }
 }
