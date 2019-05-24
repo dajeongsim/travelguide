@@ -13,7 +13,7 @@ const MainBody = () => (
       <p className={cx('p3')}><span>우리</span>의 여행</p>
       <p className={cx('p4')}>지금 바로 시작하세요</p>
     </div>
-    <div className={cx('btn')}>
+    <div className={cx('main-btn')}>
       <Button to='/category=0/page/:page?' big>전체보기</Button>
     </div>
   </div>

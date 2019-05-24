@@ -2,11 +2,12 @@ import React from 'react';
 import styles from './Map.scss';
 import classNames from 'classnames/bind';
 import * as img from 'img';
+import $ from 'jquery';
 
 const cx = classNames.bind(styles);
 
 const Map = () => {
-  window.onload = () => {
+  $(document).ready(() => {
     const area = ['seoul', 'busan', 'daegu', 'incheon', 'gwangju', 'daejeon', 'ulsan', 'sejong', 'gyeonggi', 'gangwon', 'chungbuk', 'chungnam', 'jeonbuk', 'jeonnam', 'gyeongbuk', 'gyeongnam', 'jeju'];
 
     for (let i=0; i<area.length; i++) {
@@ -17,7 +18,7 @@ const Map = () => {
         document.getElementById('mapImg').setAttribute('src', img.map0);
       }
     }
-  }
+  });
 
   return (
     <div className={cx('map')}>
