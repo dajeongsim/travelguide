@@ -3,27 +3,23 @@ require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-const mysql = require('mysql');
 const session = require('koa-session');
+const cors = require('cors');
 
 const api = require('./api');
 
-// DB
 const {
   PORT: port,
-  MYSQL_CONN: mysqlConn,
   COOKIE_SIGN_KEY: signKey
 } = process.env;
 
-const connection = mysql.createConnection(JSON.parse(mysqlConn));
-
-connection.connect(err=>{
-  if(err) return console.log(err);
-  console.log('DB Connected');
-});
-
 const app = new Koa();
 const router = new Router();
+
+// 라우터 설정
+router.get('/', (ctx) => {
+  ctx.body = '홈';
+});
 
 router.use('/api', api.routes());
 

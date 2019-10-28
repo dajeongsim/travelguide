@@ -1,15 +1,35 @@
 import React from 'react';
 import styles from './PostList.scss';
 import classNames from 'classnames/bind';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
 import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const PostList = () => {
+const PostList = ({posts, cnt}) => {
+  const postList = posts.map(
+    (post) => {
+      const { postId, postCategoryName, postTitle, postWriter, postPublishedDate, postHits, postLikeCnt } = post.toJS();
+      return (
+          <tr key={postId}>
+            <td>{postCategoryName}</td>
+            <td>
+              <Link to={`/post/${postId}`}>{postTitle}</Link>
+            </td>
+            <td>{postWriter}</td>
+            <td>{moment(postPublishedDate).format('YYYY.MM.DD')}</td>
+            <td>{postHits}</td>
+            <td>{postLikeCnt}</td>
+          </tr>
+      );
+    }
+  )
+
   return (
     <div className={cx('post-list')}>
       <div className={cx('list-header')}>
-        <span>### 건 검색됨</span>
+        <span>{cnt} 건 검색됨</span>
         <div className={cx('right')}>
         <Button to="/editor">작성하기</Button>
         </div>
@@ -35,23 +55,7 @@ const PostList = () => {
           </tr>
         </thead>
         <tbody>
-          {/* 임시 */}
-          <tr>
-            <td>♡ 경기 광주시</td>
-            <td>남한산성</td>
-            <td>admin</td>
-            <td>2019.03.26</td>
-            <td>1</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>♡ 경기 광주시</td>
-            <td>남한산성</td>
-            <td>admin</td>
-            <td>2019.03.26</td>
-            <td>1</td>
-            <td>0</td>
-          </tr>
+          {postList}
         </tbody>
       </table>
     </div>

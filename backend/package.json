@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_PATH=src node src",
+    "start:dev": "cross-env NODE_PATH=src nodemon --watch src/ src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
     "koa": "^2.6.2",
@@ -16,10 +18,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.10.1",
     "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
     "nodemon": "^1.18.9"
-  },
-  "scripts" : {
-    "start" : "cross-env NODE_PATH=src node src",
-    "start:dev" : "cross-env NODE_PATH=src nodemon --watch src/ src/index.js"
   }
 }

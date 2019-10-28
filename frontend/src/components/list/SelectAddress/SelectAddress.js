@@ -1,39 +1,43 @@
 import React from 'react';
 import styles from './SelectAddress.scss';
 import classNames from 'classnames/bind';
-// import { Link } from 'react-router-dom';
 import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const SelectAddress = ({cities=[{categoryId: 1, categoryName: 'aa'},
-                                {categoryId: 2, categoryName: 'bb'},
-                                {categoryId: 3, categoryName: 'cc'},
-                                {categoryId: 4, categoryName: 'dd'},
-                                {categoryId: 5, categoryName: 'ee'}]}) => {
-  const cityList = cities.map(
+const SelectAddress = ({cities, tags, category, listType, sltProv, onSelect, onReset, onSearch}) => {
+  const cityList = cities.toJS().map(
     (city) => {
       const { categoryId, categoryName } = city;
       return (
-        <li key={categoryId}>{categoryName}</li>
+        <li onClick={onSelect} id={categoryId} key={categoryId}>{categoryName}</li>
       );
     }
   );
 
+  const tagList = tags.toJS().map(
+    (tag) => {
+      return (
+        <li onClick={onSelect} id={tag} key={escape(tag)}>{tag}</li>
+      )
+    }
+  )
+
+  const province = (cities.getIn([0, 'categoryName']) + '').substring(0,2);
   return (
     <div className={cx('select-address')}>
-      <div className={cx('address-province')}>시·도명</div>
+      <div className={cx('address-province')}>{listType === 'c' ? province : '태그 모음'}</div>
       <div className={cx('address-city')}>
-        <span>시·구·군</span>
+        {listType === 'c' && <span>시·구·군</span>}
         <div className={cx('city-list')}>
           <ul>
-            {cityList}
+            {listType === 'c' ? cityList : tagList}
           </ul>
         </div>
       </div>
       <div className={cx('btn')}>
-        <Button>&nbsp;초기화&nbsp;</Button>
-        <Button>&nbsp;&nbsp;검색&nbsp;&nbsp;</Button>
+        <Button onClick={onReset}>&nbsp;초기화&nbsp;</Button>
+        <Button to={listType === 'c' ? `1?sCategory=${sltProv.toJS()}` : (sltProv.toJS().length > 0 ? `/tag/${sltProv.toJS()}/1` : `/tag/:tag/1`)} onClick={onSearch}>&nbsp;&nbsp;검색&nbsp;&nbsp;</Button>
       </div>
     </div>
   );

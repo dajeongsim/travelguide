@@ -11,10 +11,27 @@
       flex: 1;
 
       a {
-        margin: 0 1rem;
+        margin: 0 .5rem;
+        padding: 0 .5rem;
+        border: $oc-gray-5 1px solid;
+        border-radius: .1rem;
+
+        &:hover {
+          border: $oc-blue-5 1px solid;
+          color: $oc-blue-5;
+          text-decoration: underline;
+        }
       }
-      a:hover {
-        color: $oc-blue-6;
+
+      .active {
+        border: $oc-blue-5 1px solid;
+        color: $oc-blue-5;
+        font-weight: bold;
+        cursor: default;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }

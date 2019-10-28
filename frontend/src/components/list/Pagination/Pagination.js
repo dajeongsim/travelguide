@@ -6,14 +6,19 @@ import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const Pagination = ({page=1, lastPage=15, tag, category=0}) => {
+const Pagination = ({page, lastPage, category, sltProv}) => {
   const createPagePath = (page) => {
-    return tag ? `/tag/${tag}/${page}` : `/category=${category}/page/${page}`;
+    const sltProvJs = sltProv.toJS();
+    if (!sltProvJs[0]) {
+      return category ? `/category=${category}/page/${page}` : `/tag/:tag/${page}`;
+    } else {
+      return category ? `/category=${category}/page/${page}?sCategory=${sltProvJs}` : `/tag/${sltProv.toJS()}/${page}`;
+    }
   }
 
   const pageList = [];
   for (let i=0; i<lastPage; i++) {
-    pageList[i] = <Link to={createPagePath(i+1)}>{i+1}</Link>
+    pageList[i] = <Link className={cx({active: page===(i+1)})} to={createPagePath(i+1)} key={i+1}>{i+1}</Link>
   }
 
   const sPage = Math.floor((page - 1) / 5) * 5;
