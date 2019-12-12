@@ -9,20 +9,20 @@ import * as api from 'lib/api';
 const GET_CITY_LIST = 'GET_CITY_LIST';
 const GET_TAG_LIST = 'GET_TAG_LIST';
 const GET_POST_LIST = 'GET_POST_LIST';
-const SELECT_PROVINCE = 'SELECT_PROVINCE';
-const RESET_PROVINCE = 'RESET_PROVINCE';
+const SELECT_CITY = 'SELECT_CITY';
+const RESET_CITY = 'RESET_CITY';
 
 // action creators
 export const getCityList = createAction(GET_CITY_LIST, api.getCityList);
 export const getTagList = createAction(GET_TAG_LIST, api.getTagList);
 export const getPostList = createAction(GET_POST_LIST, api.getPostList, meta => meta);
-export const selectProvince = createAction(SELECT_PROVINCE);
-export const resetProvince = createAction(RESET_PROVINCE);
+export const selectCity = createAction(SELECT_CITY);
+export const resetCity = createAction(RESET_CITY);
 
 // initial state
 const initialState = Map({
   cities: List(),
-  sltProv: List(),
+  sltCities: List(),
   tags: List(),
   posts: List(),
   cnt : null,
@@ -34,7 +34,7 @@ export default handleActions({
   ...pender({
     type: GET_CITY_LIST,
     onSuccess: (state, action) => {
-      const { data: cities } = action.payload;
+      const { rows: cities } = action.payload.data;
 
       return state.set('cities', fromJS(cities));
     }
@@ -65,25 +65,25 @@ export default handleActions({
                   .set('lastPage', parseInt(cnt[0].cnt/10+1, 10));
     }
   }),
-  [SELECT_PROVINCE]: (state, action) => {
-    const { payload: sltProv } = action;
-    const sSltProv = state.get('sltProv');
+  [SELECT_CITY]: (state, action) => {
+    const { payload: sltCities } = action;
+    const sSltCities = state.get('sltCities');
     let select;
 
-    for (var i = 0; i < sSltProv.size; i++) {
-      if (sSltProv.get(i) === sltProv) {
+    for (var i = 0; i < sSltCities.size; i++) {
+      if (sSltCities.get(i) === sltCities) {
         select = i;
         break;
       }
     }
 
     if (select || select === 0) {
-      return state.set('sltProv', fromJS(sSltProv.delete(select)))
+      return state.set('sltCities', fromJS(sSltCities.delete(select)))
     } else {
-      return state.set('sltProv', fromJS(sSltProv.push(sltProv)));
+      return state.set('sltCities', fromJS(sSltCities.push(sltCities)));
     }
   },
-  [RESET_PROVINCE]: (state, action) => {
-    return state.set('sltProv', List());
+  [RESET_CITY]: (state, action) => {
+    return state.set('sltCities', List());
   }
 }, initialState);

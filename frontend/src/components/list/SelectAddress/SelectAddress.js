@@ -5,7 +5,7 @@ import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const SelectAddress = ({cities, tags, category, listType, sltProv, onSelect, onReset, onSearch}) => {
+const SelectAddress = ({cities, tags, category, listType, sltCities, onSelect, onReset, onSearch}) => {
   const cityList = cities.toJS().map(
     (city) => {
       const { categoryId, categoryName } = city;
@@ -37,7 +37,7 @@ const SelectAddress = ({cities, tags, category, listType, sltProv, onSelect, onR
       </div>
       <div className={cx('btn')}>
         <Button onClick={onReset}>&nbsp;초기화&nbsp;</Button>
-        <Button to={listType === 'c' ? `1?sCategory=${sltProv.toJS()}` : (sltProv.toJS().length > 0 ? `/tag/${sltProv.toJS()}/1` : `/tag/:tag/1`)} onClick={onSearch}>&nbsp;&nbsp;검색&nbsp;&nbsp;</Button>
+        <Button to={listType === 'c' ? `1?sCategory=${sltCities.toJS()}` : (sltCities.toJS().length > 0 ? `/tag/${sltCities.toJS()}/1` : `/tag/:tag/1`)} onClick={onSearch}>&nbsp;&nbsp;검색&nbsp;&nbsp;</Button>
       </div>
     </div>
   );

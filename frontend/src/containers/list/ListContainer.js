@@ -10,11 +10,11 @@ class ListContainer extends Component {
   listType = '';
 
   getCityList = () => {
-    const { category, sltProv, ListActions } = this.props;
-    const sltProvJs = sltProv.toJS();
+    const { category, sltCities, ListActions } = this.props;
+    const sltCitiesJs = sltCities.toJS();
 
-    for (var i = 0; i < sltProvJs.length; i++) {
-      document.getElementById(sltProvJs[i]).setAttribute('class', 'slt-prov');
+    for (var i = 0; i < sltCitiesJs.length; i++) {
+      document.getElementById(sltCitiesJs[i]).setAttribute('class', 'slt-cities');
     }
 
     this.listType = 'c'
@@ -23,10 +23,10 @@ class ListContainer extends Component {
   }
 
   getPostList = () => {
-    const { category, sltProv, page, ListActions } = this.props;
-    const sltProvJs = sltProv.toJS();
+    const { category, sltCities, page, ListActions } = this.props;
+    const sltCitiesJs = sltCities.toJS();
 
-    ListActions.getPostList({category, sltProv: sltProvJs, page});
+    ListActions.getPostList({category, sltCities: sltCitiesJs, page});
   }
 
   getTagList = () => {
@@ -40,24 +40,24 @@ class ListContainer extends Component {
   handleSelect = (e) => {
     const { ListActions } = this.props;
 
-    if (e.target.className!=='slt-prov') {
-      e.target.className = 'slt-prov';
+    if (e.target.className!=='slt-cities') {
+      e.target.className = 'slt-cities';
     } else {
         e.target.className = '';
     }
 
-    ListActions.selectProvince(e.target.id);
+    ListActions.selectCity(e.target.id);
   }
 
   handleReset = () => {
     const { ListActions } = this.props;
-    const element = document.getElementsByClassName('slt-prov');
+    const element = document.getElementsByClassName('slt-cities');
 
     for(var i = element.length-1; i >= 0; i--) {
       element.item(i).setAttribute('class', '');
     }
 
-    ListActions.resetProvince();
+    ListActions.resetCity();
   }
 
   handleSearch = () => {
@@ -86,12 +86,12 @@ class ListContainer extends Component {
   }
 
   render() {
-    const { category, tags, cities, sltProv, posts, page, cnt, lastPage } = this.props;
+    const { category, tags, cities, sltCities, posts, page, cnt, lastPage } = this.props;
     return (
       <div>
-        <SelectAddress cities={cities} tags={tags} listType={this.listType} category={category} sltProv={sltProv} onSelect={this.handleSelect} onReset={this.handleReset} onSearch={this.handleSearch} />
+        <SelectAddress cities={cities} tags={tags} listType={this.listType} category={category} sltCities={sltCities} onSelect={this.handleSelect} onReset={this.handleReset} onSearch={this.handleSearch} />
         <PostList posts={posts} cnt={cnt} />
-        <Pagination category={category} page={page} lastPage={lastPage} sltProv={sltProv} />
+        <Pagination category={category} page={page} lastPage={lastPage} sltCities={sltCities} />
       </div>
     );
   }
@@ -100,7 +100,7 @@ class ListContainer extends Component {
 export default connect(
   (state) => ({
     cities: state.list.get('cities'),
-    sltProv: state.list.get('sltProv'),
+    sltCities: state.list.get('sltCities'),
     tags: state.list.get('tags'),
     posts: state.list.get('posts'),
     cnt : state.list.get('cnt'),

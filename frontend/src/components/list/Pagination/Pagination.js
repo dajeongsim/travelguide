@@ -6,13 +6,13 @@ import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const Pagination = ({page, lastPage, category, sltProv}) => {
+const Pagination = ({page, lastPage, category, sltCities}) => {
   const createPagePath = (page) => {
-    const sltProvJs = sltProv.toJS();
-    if (!sltProvJs[0]) {
+    const sltCitiesJs = sltCities.toJS();
+    if (!sltCitiesJs[0]) {
       return category ? `/category=${category}/page/${page}` : `/tag/:tag/${page}`;
     } else {
-      return category ? `/category=${category}/page/${page}?sCategory=${sltProvJs}` : `/tag/${sltProv.toJS()}/${page}`;
+      return category ? `/category=${category}/page/${page}?sCategory=${sltCitiesJs}` : `/tag/${sltCities.toJS()}/${page}`;
     }
   }
 

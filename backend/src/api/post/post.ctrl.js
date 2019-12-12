@@ -2,11 +2,21 @@ const db = require('lib/db');
 
 exports.cityList = async (ctx) => {
   const { category } = ctx.params;
+  console.log(category);
 
   try {
-    const [rows] = await db.query('SELECT categoryId, categoryName FROM category WHERE categoryId>="' + category + '" AND categoryId<"' + (parseInt(category, 10)+100) + '"');
+    if (category==='prov') {
+      const [rows] = await db.query('SELECT categoryId, categoryName FROM category WHERE categoryId=0 OR categoryParent=0');
 
-    ctx.body = rows;
+      ctx.body = {rows, type:'p'}; // province
+    } else {
+      const [rows] = await db.query('SELECT categoryId, categoryName FROM category WHERE categoryId>="' + category + '" AND categoryId<"' + (parseInt(category, 10)+100) + '"');
+
+      ctx.body = {rows, type:'c'}; // city
+    }
+    // const [rows] = await db.query('SELECT categoryId, categoryName FROM category WHERE categoryId>="' + category + '" AND categoryId<"' + (parseInt(category, 10)+100) + '"');
+
+    // ctx.body = rows;
   } catch (e) {
     ctx.throw(e, 500);
   }
@@ -24,20 +34,20 @@ exports.tagList = async (ctx) => {
 }
 
 exports.postList = async (ctx) => {
-  const { category, sltProv, tags, page } = ctx.query;
+  const { category, sltCities, tags, page } = ctx.query;
   const startPg = page===1 ? 0 : (page-1)*10;
   try {
-    if (!category && sltProv) {
+    if (!category && sltCities) {
       // 태그별 선택 출력
       let str;
-      if (Array.isArray(sltProv)) {
-        for (var i = 0; i < sltProv.length; i++) {
-          sltProv[i] = '"' + sltProv[i] + '"';
+      if (Array.isArray(sltCities)) {
+        for (var i = 0; i < sltCities.length; i++) {
+          sltCities[i] = '"' + sltCities[i] + '"';
         }
-        const temp = sltProv.toString();
+        const temp = sltCities.toString();
         str = temp.substring(1, temp.length-1);
       } else {
-        str = sltProv;
+        str = sltCities;
       }
 
       const [rows] = await db.query('SELECT DISTINCT p.postId, p.postCategoryName, p.postTitle, p.postWriter, p.postPublishedDate, p.postHits, p.postLikeCnt FROM post AS p JOIN tag AS t WHERE p.postId=t.tagPost AND (t.tagBody IN ("' + str + '")) ORDER BY postId DESC LIMIT ' + startPg + ', 10');
@@ -56,7 +66,7 @@ exports.postList = async (ctx) => {
       console.log('1');
       console.log(cnt);
       ctx.body = {rows, cnt};
-    } else if (!sltProv && category) {
+    } else if (!sltCities && category) {
       // 지역별 전체 줄력
       const [rows] = await db.query('SELECT p.postId, p.postCategoryName, p.postTitle, p.postWriter, p.postPublishedDate, p.postHits, p.postLikeCnt FROM post AS p JOIN category AS c WHERE p.postCategory=c.categoryId AND c.categoryParent="' + category + '" ORDER BY postId DESC LIMIT ' + startPg + ', 10');
 
@@ -67,9 +77,9 @@ exports.postList = async (ctx) => {
       ctx.body = {rows, cnt};
     } else {
       // 지역별 선택 출력
-      const [rows] = await db.query('SELECT p.postId, p.postCategoryName, p.postTitle, p.postWriter, p.postPublishedDate, p.postHits, p.postLikeCnt FROM post AS p JOIN category AS c WHERE p.postCategory=c.categoryId AND (postCategory IN (' + sltProv.toString() + ') OR categoryParent IN (' + sltProv.toString() + ')) ORDER BY postId DESC LIMIT ' + startPg + ', 10');
+      const [rows] = await db.query('SELECT p.postId, p.postCategoryName, p.postTitle, p.postWriter, p.postPublishedDate, p.postHits, p.postLikeCnt FROM post AS p JOIN category AS c WHERE p.postCategory=c.categoryId AND (postCategory IN (' + sltCities.toString() + ') OR categoryParent IN (' + sltCities.toString() + ')) ORDER BY postId DESC LIMIT ' + startPg + ', 10');
 
-      const [cnt] = await db.query('SELECT count(*) as cnt FROM post AS p JOIN category AS c WHERE p.postCategory=c.categoryId AND (postCategory IN (' + sltProv.toString() + ') OR categoryParent IN (' + sltProv.toString() + '))');
+      const [cnt] = await db.query('SELECT count(*) as cnt FROM post AS p JOIN category AS c WHERE p.postCategory=c.categoryId AND (postCategory IN (' + sltCities.toString() + ') OR categoryParent IN (' + sltCities.toString() + '))');
 
       console.log('3');
       console.log(cnt);
