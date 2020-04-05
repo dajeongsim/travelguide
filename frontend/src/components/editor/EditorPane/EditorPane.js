@@ -12,7 +12,6 @@ import 'summernote/dist/summernote-bs4.css';
 const cx = classNames.bind(styles);
 
 class EditorPane extends Component {
-
   getMap(first) {
     // 마커를 담을 배열입니다
     var markers = [];
@@ -82,7 +81,6 @@ class EditorPane extends Component {
 
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayPlaces(places) {
-
         var listEl = document.getElementById('placesList'),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(),
@@ -109,7 +107,8 @@ class EditorPane extends Component {
             // 마커와 검색결과 항목에 mouseover 했을때
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
-            (function(marker, title) {
+            // + click 했을 때 address에 값 등록
+            (function(marker, title, address) {
                 window.daum.maps.event.addListener(marker, 'mouseover', function() {
                     displayInfowindow(marker, title);
                 });
@@ -118,6 +117,10 @@ class EditorPane extends Component {
                     infowindow.close();
                 });
 
+                window.daum.maps.event.addListener(marker, 'click', function() {
+                    insertPlace(marker, title, address);
+                })
+
                 itemEl.onmouseover =  function () {
                     displayInfowindow(marker, title);
                 };
@@ -125,7 +128,11 @@ class EditorPane extends Component {
                 itemEl.onmouseout =  function () {
                     infowindow.close();
                 };
-            })(marker, places[i].place_name);
+
+                itemEl.onclick = function () {
+                    insertPlace(marker, title, address);
+                }
+            })(marker, places[i].place_name, places[i].road_address_name || places[i].address_name);
 
             fragment.appendChild(itemEl);
         }
@@ -231,6 +238,12 @@ class EditorPane extends Component {
         infowindow.open(map, marker);
     }
 
+    // 선택한 마커의 장소를 address에 입력
+    function insertPlace(marker, title, address) {
+        document.getElementById('address').value = address + `, ${title}`;
+        document.getElementById('address').click();
+    }
+
      // 검색결과 목록의 자식 Element를 제거하는 함수입니다
     function removeAllChildNods(el) {
         while (el.hasChildNodes()) {
@@ -239,22 +252,90 @@ class EditorPane extends Component {
     }
   }
 
+  handleChange = (e) => {
+    const { onChangeInput } = this.props;
+    const { name, value } = e.target;
+    onChangeInput({name, value});
+  }
+
+  handleChangeContents = () => {
+    const { onChangeInput } = this.props;
+    const contents = $('#summernote').summernote('code');
+    onChangeInput({name: 'contents', value: contents});
+  }
+
+  replaceBlank = (e) => {
+    const tags = e.target.value.replace(/\s/g, '#').replace(/#+#/, '#');
+    e.target.value = tags;
+  }
+
+  handleFocus = (e) => {
+    const { value } = e.target;
+
+    (value) ? e.target.value = value + '#' : e.target.value = '#';
+  }
+
+  handleBlur = (e) => {
+    const { value } = e.target;
+
+    (value.charAt(0) !== '#') && (e.target.value = '#' + value);
+
+    if (value === '#') {
+      e.target.value = '';
+    } else if (value.charAt(value.length-1) === '#') {
+      e.target.value = value.substring(0, value.length-1);
+    }
+  }
+
+  handleSelect = () => {
+    const { getCategoryList } = this.props;
+    const id = document.getElementById('category0').options[document.getElementById('category0').selectedIndex].value;
+
+    getCategoryList(id);
+  }
+
   componentDidMount() {
+    const { handleChangeContents } = this;
     $(document).ready(function(){
       $('#summernote').summernote({
         placeholder: '내용을 입력하세요.',
         tabsize: 2,
         height: 500,
         lang : 'ko-KR',
+        callbacks: {
+          onChange: function(){
+            handleChangeContents();
+          }
+        }
       });
     });
     this.getMap('t');
   }
 
   render() {
+    const { handleChange, replaceBlank, handleFocus, handleBlur, handleSelect } = this;
+    const { onGoBack, onSubmit } = this.props;
+    const { title, address, tags, provs, provs2 } = this.props;
+
+    const category0 = provs.toJS().map(prov => <option key={prov.categoryId} value={prov.categoryId}>{prov.categoryName.substring(0,2)}</option>);
+    const category = provs2.toJS().map(prov => <option key={prov.categoryId} value={prov.categoryId}>{prov.categoryName}</option>);
+
     return (
       <div className={cx('editor-pane')}>
-        <input className={cx('title')} type='text' placeholder='제목' />
+        <div className={cx('select-category')}>
+          <select name='category0' id='category0' onChange={handleSelect}>
+            {category0}
+          </select>
+          <select name='category' onChange={handleChange}>
+            {category}
+          </select>
+        </div>
+        <input className={cx('title')}
+               type='text'
+               placeholder='제목'
+               name="title"
+               value={title}
+               onChange={handleChange} />
         <div className={cx('map_wrap')}>
           <div id="map"></div>
           <div id="menu_wrap" className={cx('bg_white')}>
@@ -271,11 +352,29 @@ class EditorPane extends Component {
             <div id="pagination"></div>
           </div>
         </div>
+        <input className={cx('address')}
+               id='address'
+               type='text'
+               placeholder='장소를 선택해주세요.'
+               name="address"
+               onClick={handleChange}
+               value={address}
+               readOnly />
         <div id="summernote"></div>
-        <input className={cx('tags')} type='text' placeholder='#태그' />
+        <input className={cx('tags')}
+               type='text'
+               placeholder='#태그를 공백없이 입력해주세요 ex)#태그는#이렇게'
+               name="tags"
+               onKeyUp={replaceBlank}
+               onChange={handleChange}
+               onFocus={handleFocus}
+               onBlur={(e)=>{
+                 handleBlur(e);
+                 handleChange(e); }}
+               value={tags} />
         <div className={cx('btn')}>
-          <Button>목록으로</Button>
-          <Button>작성하기</Button>
+          <Button onClick={onGoBack}>목록으로</Button>
+          <Button onClick={onSubmit}>작성하기</Button>
         </div>
       </div>
     );

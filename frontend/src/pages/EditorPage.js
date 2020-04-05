@@ -1,11 +1,13 @@
 import React from 'react';
 import PageTemplate from 'components/common/PageTemplate';
-import EditorPane from 'components/editor/EditorPane';
+import EditorPaneContainer from 'containers/editor/EditorPaneContainer';
+// import EditorPane from 'components/editor/EditorPane';
 
 const EditorPage = () => {
   return (
     <PageTemplate>
-      <EditorPane />
+      <EditorPaneContainer />
+      {/* <EditorPane /> */}
     </PageTemplate>
   );
 }

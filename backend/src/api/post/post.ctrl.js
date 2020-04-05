@@ -89,3 +89,16 @@ exports.postList = async (ctx) => {
     ctx.throw(e, 500);
   }
 }
+
+exports.writePost = async (ctx) => {
+  //{title, category, address, contents, tags}
+  const { title, address, contents, tags, category, userId } = ctx.request.body;
+  try {
+    const [rows] = await db.query(`INSERT INTO post(postTitle, postAddress, postBody, postTags, postCategory, postCategoryName, postWriter, postWriterId) SELECT '${title}', '${address}', '${contents}', '${tags}', '${category}', c.categoryName, u.userMemId, '${userId}' FROM category AS c, user AS u WHERE c.categoryId=${category} AND u.userId=${userId}`);
+
+    console.log(rows);
+    ctx.body = rows;
+  } catch (e) {
+    ctx.throw(e, 500);
+  }
+}
