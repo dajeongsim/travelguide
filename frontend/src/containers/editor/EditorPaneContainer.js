@@ -20,10 +20,11 @@ class EditorPaneContainer extends Component {
   }
 
   handleSubmit = async () => {
-    const { title, address, contents, tags, category, history } = this.props;
+    const { title, address, coords, contents, tags, category, history } = this.props;
     const { EditorActions } = this.props;
 
-    await EditorActions.writePost({title, address, contents, tags, category, userId: 1});
+    await EditorActions.writePost({title, address,
+      coords, contents, tags, category, userId: 1});
     history.push(`/post/${this.props.postId}`);
   }
 
@@ -60,6 +61,7 @@ export default connect(
     categories2: state.editor.get('categories2'),
     category: state.editor.get('category'),
     address: state.editor.get('address'),
+    coords: state.editor.get('coords'),
     contents: state.editor.get('contents'),
     tags: state.editor.get('tags'),
     postId: state.editor.get('postId')

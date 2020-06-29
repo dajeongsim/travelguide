@@ -28,6 +28,10 @@ const initialState = Map({
   categories2: List(),
   category: '',
   address: '',
+  coords: Map({
+    latitude: null,
+    longitude: null
+  }),
   contents: '',
   tags: '',
   postId: null
@@ -38,6 +42,7 @@ export default handleActions({
   [INITIALIZE]: (state, action) => initialState,
   [CHANGE_INPUT]: (state, action) => {
     const {name, value} = action.payload;
+
     return state.set(name, value);
   },
   ...pender({

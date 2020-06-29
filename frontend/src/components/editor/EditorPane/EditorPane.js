@@ -12,7 +12,9 @@ import 'summernote/dist/summernote-bs4.css';
 const cx = classNames.bind(styles);
 
 class EditorPane extends Component {
-  getMap(first) {
+  getMap = (first) => {
+    const { onChangeInput } = this.props;
+
     // 마커를 담을 배열입니다
     var markers = [];
 
@@ -99,6 +101,7 @@ class EditorPane extends Component {
             var placePosition = new window.daum.maps.LatLng(places[i].y, places[i].x),
                 marker = addMarker(placePosition, i),
                 itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+                // console.log(`x:${places[i].x}, y:${places[i].y}`);
 
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
@@ -108,7 +111,7 @@ class EditorPane extends Component {
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
             // + click 했을 때 address에 값 등록
-            (function(marker, title, address) {
+            (function(marker, title, address, places) {
                 window.daum.maps.event.addListener(marker, 'mouseover', function() {
                     displayInfowindow(marker, title);
                 });
@@ -118,7 +121,8 @@ class EditorPane extends Component {
                 });
 
                 window.daum.maps.event.addListener(marker, 'click', function() {
-                    insertPlace(marker, title, address);
+                    // insertPlace(marker, title, address);
+                    insertPlace(title, address, places.y, places.x);
                 })
 
                 itemEl.onmouseover =  function () {
@@ -130,9 +134,9 @@ class EditorPane extends Component {
                 };
 
                 itemEl.onclick = function () {
-                    insertPlace(marker, title, address);
+                    insertPlace(title, address, places.y, places.x);
                 }
-            })(marker, places[i].place_name, places[i].road_address_name || places[i].address_name);
+            })(marker, places[i].place_name, places[i].road_address_name || places[i].address_name, places[i]);
 
             fragment.appendChild(itemEl);
         }
@@ -239,9 +243,13 @@ class EditorPane extends Component {
     }
 
     // 선택한 마커의 장소를 address에 입력
-    function insertPlace(marker, title, address) {
+    function insertPlace(title, address, lat, lng, func) {
+        console.log(`${lat}, ${lng}`);
         document.getElementById('address').value = address + `, ${title}`;
-        document.getElementById('address').click();
+        // document.getElementById('address').click();
+        onChangeInput({name: 'address', value: address + `, ${title}`})
+        onChangeInput({name: 'coords', value: {latitude: lat, longitude: lng}});
+
     }
 
      // 검색결과 목록의 자식 Element를 제거하는 함수입니다
@@ -357,7 +365,7 @@ class EditorPane extends Component {
                type='text'
                placeholder='장소를 선택해주세요.'
                name="address"
-               onClick={handleChange}
+               // onClick={handleChange}
                value={address}
                readOnly />
         <div id="summernote"></div>
