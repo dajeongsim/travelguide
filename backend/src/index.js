@@ -3,14 +3,15 @@ require('dotenv').config();
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-const session = require('koa-session');
+const { jwtMiddleware } = require('lib/token');
+// const session = require('koa-session');
 const cors = require('cors');
 
 const api = require('./api');
 
 const {
   PORT: port,
-  COOKIE_SIGN_KEY: signKey
+  // COOKIE_SIGN_KEY: signKey
 } = process.env;
 
 const app = new Koa();
@@ -25,11 +26,13 @@ router.use('/api', api.routes());
 
 app.use(bodyParser());
 
-const sessionConfig = {
-  maxAge: 86400000
-}
-app.use(session(sessionConfig, app));
-app.keys = [signKey];
+app.use(jwtMiddleware);
+
+// const sessionConfig = {
+//   maxAge: 86400000
+// }
+// app.use(session(sessionConfig, app));
+// app.keys = [signKey];
 
 app.use(router.routes()).use(router.allowedMethods());
 

@@ -6,15 +6,16 @@ import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const Header = () => (
+const Header = ({userMemId, logged, onLoginClick}) => (
   <header className={cx('header')}>
     <div className={cx('header-content')}>
       <div className={cx('logo')}>
         <Link to="/">travelguide</Link>
       </div>
       <div className={cx('right')}>
-        <Button theme="outline">로그인</Button>
-        <Button theme="outline" to="/register">회원가입</Button>
+        {logged && <div className={cx('logged-user')}>{userMemId} 님</div>}
+        <Button theme="outline" onClick={onLoginClick}>{logged ? '로그아웃' : '로그인'}</Button>
+        {logged || <Button theme="outline" to="/register">회원가입</Button>}
       </div>
     </div>
   </header>

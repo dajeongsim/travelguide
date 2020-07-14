@@ -28,6 +28,15 @@
 
     .right {
       margin-left: auto;
+
+      .logged-user {
+        margin: 0 1rem;
+        display: inline-block;
+
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
     }
   }
 }

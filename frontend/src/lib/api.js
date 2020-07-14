@@ -8,3 +8,7 @@ export const writePost = ({title, address, coords, contents, tags, category, use
 export const getPost = ({postId, userId}) => axios.get(`/api/post/${postId}/${userId}`);
 export const toggleLike = ({targetId, type, userId, writerId, likes}) => axios.post('/api/post/like', {targetId, type, userId, writerId, likes});
 export const onBlame = ({targetId, type, userId, writerId}) => axios.post('/api/post/blame', {targetId, type, userId, writerId});
+
+export const login = ({id, password}) => axios.post('/api/auth/login', {id, password});
+export const logout = () => axios.post('/api/auth/logout');
+export const checkLogin = () => axios.get('/api/auth/checkLogin');

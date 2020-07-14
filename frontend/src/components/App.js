@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { EditorPage, JoinPage, ListPage, MainPage, NotFoundPage, PostPage } from 'pages';
+import Base from 'containers/common/Base';
 
 class App extends Component {
   render() {
@@ -15,7 +16,7 @@ class App extends Component {
         <Route path="/register" component={JoinPage} />
         <Route component={NotFoundPage} />
       </Switch>
-      {/* <Base /> */}
+      <Base />
       </div>
     );
   }
