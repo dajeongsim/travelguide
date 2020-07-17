@@ -5,20 +5,21 @@ import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const Register = () => {
+const Register = ({userInfo, error, onChangeInput, onRegister}) => {
   return (
     <div className={cx('register')}>
       <h2>회원가입</h2>
       <div className={cx('login-info')}>
-        <input type="text" placeholder="ID" />
-        <input type="text" placeholder="PASSWORD" />
-        <input type="text" placeholder="PASSWORD CHECK" />
+        <input type="text" placeholder="ID" name="id" value={userInfo.id} onChange={onChangeInput} />
+        <input type="password" placeholder="PASSWORD" name="password" value={userInfo.password} onChange={onChangeInput} />
+        <input type="password" placeholder="PASSWORD CHECK" name="passwordConfirm" value={userInfo.passwordConfirm} onChange={onChangeInput} />
       </div>
       <div className={cx('user-info')}>
-        <input type="text" placeholder="NAME" />
-        <input type="text" placeholder="E-MAIL" />
+        <input type="text" placeholder="NAME" name="name" value={userInfo.name} onChange={onChangeInput} />
+        <input type="text" placeholder="E-MAIL" name="email" value={userInfo.email} onChange={onChangeInput} />
       </div>
-      <Button big>가입하기</Button>
+      {<div className={cx('error')}>{error}</div>}
+      <Button big onClick={onRegister}>가입하기</Button>
     </div>
   );
 }

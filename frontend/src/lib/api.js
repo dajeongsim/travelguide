@@ -12,3 +12,7 @@ export const onBlame = ({targetId, type, userId, writerId}) => axios.post('/api/
 export const login = ({id, password}) => axios.post('/api/auth/login', {id, password});
 export const logout = () => axios.post('/api/auth/logout');
 export const checkLogin = () => axios.get('/api/auth/checkLogin');
+
+export const register = ({id, password, name, email}) => axios.post('/api/user/register', {id, password, name, email});
+export const checkIdExists = (id) => axios.get(`/api/user/check/id/${id}`);
+export const checkEmailExists = (email) => axios.get(`/api/user/check/email/${email}`);

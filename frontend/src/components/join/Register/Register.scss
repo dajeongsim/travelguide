@@ -13,6 +13,10 @@
 
     @include material-shadow(2, .5);
 
+    ::placeholder {
+        color: $oc-gray-5;
+    }
+
     h2 {
       margin: 0 0 .5rem;
 
@@ -35,7 +39,15 @@
     }
 
     .user-info {
-      padding: 1.5rem 0;
+      padding: 1.5rem 0 .5rem 0;
+    }
+
+    .error {
+      margin-bottom: 1rem;
+
+      text-align: center;
+      font-size: .8rem;
+      color: red;
     }
 
     @include media("<large") {

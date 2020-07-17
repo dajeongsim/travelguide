@@ -11,6 +11,7 @@
     "immutable": "^4.0.0-rc.12",
     "include-media": "^1.4.9",
     "jquery": "^3.4.0",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "open-color": "^1.6.3",
@@ -24,7 +25,8 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-pender": "^2.0.12",
-    "summernote": "^0.8.11"
+    "summernote": "^0.8.11",
+    "validator": "^13.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
