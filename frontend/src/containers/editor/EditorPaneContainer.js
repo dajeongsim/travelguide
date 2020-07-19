@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import * as editorActions from 'store/modules/editor';
-// import * as listActions from 'store/modules/list';
 
 class EditorPaneContainer extends Component {
   handleGoBack = () => {
@@ -43,6 +42,15 @@ class EditorPaneContainer extends Component {
     this.getCategoryList(0);
   }
 
+  componentDidUpdate() {
+    const { logged, history } = this.props;
+
+    if(!logged) {
+      alert('로그인 후 이용 가능합니다.');
+      history.push('/');
+    }
+  }
+
   render() {
     const { title, address, contents, tags, categories, categories2, category } = this.props;
     const { handleGoBack, handleChangeInput, handleSubmit, getCategoryList } = this;
@@ -64,7 +72,8 @@ export default connect(
     coords: state.editor.get('coords'),
     contents: state.editor.get('contents'),
     tags: state.editor.get('tags'),
-    postId: state.editor.get('postId')
+    postId: state.editor.get('postId'),
+    logged: state.base.get('logged')
   }),
   (dispatch) => ({
     EditorActions: bindActionCreators(editorActions, dispatch)
