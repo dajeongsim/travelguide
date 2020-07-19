@@ -6,11 +6,11 @@ import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
 // action types
-const GET_CITY_LIST = 'GET_CITY_LIST';
-const GET_TAG_LIST = 'GET_TAG_LIST';
-const GET_POST_LIST = 'GET_POST_LIST';
-const SELECT_CITY = 'SELECT_CITY';
-const RESET_CITY = 'RESET_CITY';
+const GET_CITY_LIST = 'list/GET_CITY_LIST';
+const GET_TAG_LIST = 'list/GET_TAG_LIST';
+const GET_POST_LIST = 'list/GET_POST_LIST';
+const SELECT_CITY = 'list/SELECT_CITY';
+const RESET_CITY = 'list/RESET_CITY';
 
 // action creators
 export const getCityList = createAction(GET_CITY_LIST, api.getCityList);
