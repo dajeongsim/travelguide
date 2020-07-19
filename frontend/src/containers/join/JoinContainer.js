@@ -9,6 +9,14 @@ import * as joinActions from 'store/modules/join';
 import * as baseActions from 'store/modules/base';
 
 class JoinContainer extends Component {
+  componentDidUpdate() {
+    const { logged, history } = this.props;
+
+    if(logged) {
+      history.push('/');
+    }
+  }
+
   setError = (error) => {
     const { JoinActions } = this.props;
 
@@ -118,8 +126,7 @@ class JoinContainer extends Component {
   }
 
   render() {
-    const { error } = this.props;
-    const { userInfo } = this.props;
+    const { userInfo, error } = this.props;
     const { handleChangeInput, handleRegister } = this;
 
     return (
@@ -133,7 +140,8 @@ export default connect(
     userInfo: state.join.get('userInfo').toJS(),
     exists: state.join.get('exists').toJS(),
     error: state.join.get('error'),
-    loggedInfo: state.base.get('loggedInfo')
+    loggedInfo: state.base.get('loggedInfo'),
+    logged: state.base.get('logged')
   }),
   (dispatch) => ({
     JoinActions: bindActionCreators(joinActions, dispatch),
