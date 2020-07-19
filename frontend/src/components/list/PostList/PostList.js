@@ -7,7 +7,7 @@ import Button from 'components/common/Button';
 
 const cx = classNames.bind(styles);
 
-const PostList = ({posts, cnt}) => {
+const PostList = ({posts, cnt, onWrite}) => {
   const postList = posts.map(
     (post) => {
       const { postId, postCategoryName, postTitle, postWriter, postPublishedDate, postHits, postLikeCnt } = post.toJS();
@@ -31,7 +31,7 @@ const PostList = ({posts, cnt}) => {
       <div className={cx('list-header')}>
         <span>{cnt} 건 검색됨</span>
         <div className={cx('right')}>
-        <Button to="/editor">작성하기</Button>
+        <Button onClick={onWrite}>작성하기</Button>
         </div>
       </div>
       <table className={cx('list')}>

@@ -4,7 +4,9 @@ import Pagination from 'components/list/Pagination';
 import SelectAddress from 'components/list/SelectAddress';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
 import * as listActions from 'store/modules/list';
+import * as baseActions from 'store/modules/base';
 
 class ListContainer extends Component {
   listType = '';
@@ -72,6 +74,17 @@ class ListContainer extends Component {
     }
   }
 
+  handleWrite = () => {
+    const { logged, history } = this.props;
+    const { BaseActions } = this.props;
+
+    if(!logged) {
+      BaseActions.showModal('login');
+      return ;
+    }
+    history.push('/editor');
+  }
+
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps.category !== this.props.category) {
       await this.handleReset();
@@ -86,11 +99,14 @@ class ListContainer extends Component {
   }
 
   render() {
-    const { category, tags, cities, sltCities, posts, page, cnt, lastPage } = this.props;
+    const { category, tags, cities, sltCities, posts, page, cnt, lastPage, loading } = this.props;
+
+    if(loading) return null;
+
     return (
       <div>
         <SelectAddress cities={cities} tags={tags} listType={this.listType} category={category} sltCities={sltCities} onSelect={this.handleSelect} onReset={this.handleReset} onSearch={this.handleSearch} />
-        <PostList posts={posts} cnt={cnt} />
+        <PostList posts={posts} cnt={cnt} onWrite={this.handleWrite} />
         <Pagination category={category} page={page} lastPage={lastPage} sltCities={sltCities} />
       </div>
     );
@@ -104,9 +120,12 @@ export default connect(
     tags: state.list.get('tags'),
     posts: state.list.get('posts'),
     cnt : state.list.get('cnt'),
-    lastPage: state.list.get('lastPage')
+    lastPage: state.list.get('lastPage'),
+    logged: state.base.get('logged'),
+    loading: state.pender.pending['list/GET_CITY_LIST'] || state.pender.pending['list/GET_TAG_LIST'] // 로딩 상태
   }),
   (dispatch) => ({
-    ListActions: bindActionCreators(listActions, dispatch)
+    ListActions: bindActionCreators(listActions, dispatch),
+    BaseActions: bindActionCreators(baseActions, dispatch)
   })
-)(ListContainer);
+)(withRouter(ListContainer));
