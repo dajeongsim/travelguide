@@ -7,10 +7,24 @@ import { withRouter } from 'react-router-dom';
 import * as postActions from 'store/modules/post';
 
 class PostContainer extends Component {
-
   componentDidMount() {
-    this.props.PostActions.getPost({postId: this.props.postId, userId: 1});
+    const { postId } = this.props;
+    const userId = localStorage.loggedInfo ? JSON.parse(localStorage.loggedInfo).userId : 0;
+    const { PostActions } = this.props;
+
+    PostActions.getPost({postId: postId, userId: userId});
+
     document.documentElement.scrollTop = 0;
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.logged!==prevProps.logged) {
+      const { postId } = this.props;
+      const { userId } = this.props.loggedInfo;
+      const { PostActions } = this.props;
+
+      PostActions.getPost({postId: postId, userId: userId});
+    }
   }
 
   handleGoBack = () => {
@@ -24,7 +38,8 @@ class PostContainer extends Component {
   }
 
   handleToggleLike = () => {
-    const { postId, userId=1, likes } = this.props;
+    const { postId, likes } = this.props;
+    const { userId } = this.props.loggedInfo;
     const { postWriterId } = this.props.post;
     const { PostActions } = this.props;
 
@@ -38,7 +53,8 @@ class PostContainer extends Component {
   }
 
   handleBlame = () => {
-    const { postId, userId=1, blame } = this.props;
+    const { postId, blame } = this.props;
+    const { userId } = this.props.loggedInfo;
     const { postWriterId } = this.props.post;
     const { PostActions } = this.props;
 
@@ -56,14 +72,12 @@ class PostContainer extends Component {
   }
 
   render() {
-    const { post, likes, blame } = this.props;
+    const { post, likes, blame, loading } = this.props;
     const { handleGoBack, handleScrap, handleToggleLike, handleBlame } = this;
-
-    // console.log(`like:${likes}, likeCnt:${post.postLikeCnt}, blame:${blame}, blameCnt:${post.postBlameCnt}`);
     // postId, postTitle, postAddress, postBody, postTags, postCategory, postCategoryName, postPublishedDate, postWriter, postWriterId, postBlameCnt, postLikeCnt, postHits
     return (
       <div>
-        <PostInfo title={post.postTitle} writer={post.postWriter} publishedDate={post.postPublishedDate} tags={post.postTags} likeCnt={post.postLikeCnt} hitcount={post.postHits} likes={likes} blame={blame} onGoBack={handleGoBack} onScrap={handleScrap} onToggleLike={handleToggleLike} onBlame={handleBlame} />
+        {!loading&&<PostInfo title={post.postTitle} writer={post.postWriter} publishedDate={post.postPublishedDate} tags={post.postTags} likeCnt={post.postLikeCnt} hitcount={post.postHits} likes={likes} blame={blame} onGoBack={handleGoBack} onScrap={handleScrap} onToggleLike={handleToggleLike} onBlame={handleBlame} />}
         <PostBody address={post.postAddress} lat={post.postAddressLat} lng={post.postAddressLng} contents={post.postBody} />
       </div>
     );
@@ -74,7 +88,10 @@ export default connect(
   (state) => ({
     post: state.post.get('post').toJS(),
     likes: state.post.get('likes'),
-    blame: state.post.get('blame')
+    blame: state.post.get('blame'),
+    loggedInfo: state.base.get('loggedInfo').toJS(),
+    logged: state.base.get('logged'),
+    loading: state.pender.pending['post/GET_POST']
   }),
   (dispatch) => ({
     PostActions: bindActionCreators(postActions, dispatch)
