@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { EditorPage, JoinPage, ListPage, MainPage, NotFoundPage, PostPage } from 'pages';
+import { EditorPage, JoinPage, ListPage, LoginLoadingPage, MainPage, NotFoundPage, PostPage } from 'pages';
 import Base from 'containers/common/Base';
 
 class App extends Component {
@@ -14,6 +14,8 @@ class App extends Component {
         <Route path="/post/:id" component={PostPage} />
         <Route path="/editor" component={EditorPage} />
         <Route path="/register" component={JoinPage} />
+        <Route path="/naverLogin" render={
+          (props)=>(<LoginLoadingPage {...props} social="네이버" />)} />
         <Route component={NotFoundPage} />
       </Switch>
       <Base />

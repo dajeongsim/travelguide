@@ -6,9 +6,7 @@ import * as img from 'img';
 
 const cx = classNames.bind(styles);
 
-const LoginModal = ({
-  visible, id, password, error, onCancel, onLogin, onChange, onCheckInput, onKeyPress
-}) => (
+const LoginModal = ({visible, id, password, error, onCancel, onLogin, onNaverLogin, onChange, onCheckInput, onKeyPress}) => (
   <ModalWrapper visible={visible}>
     <div className={cx('login-modal')}>
       <div onClick={onCancel} className={cx('close')}>&times;</div>
@@ -32,7 +30,7 @@ const LoginModal = ({
       } className={cx('login')}>로그인</div>
       <div className={cx('sns-title')}>--------- SNS 계정으로 로그인 ---------</div>
       <div className={cx('sns-login')}>
-        <li><img src={img.symbol_naver} alt="네이버로그인" title="네이버로그인" /></li>
+        <li><div id="naver_id_login"><img src={img.symbol_naver} alt="네이버로그인" title="네이버로그인" onClick={onNaverLogin} /></div></li>
         <li><img src={img.symbol_google} alt="구글로그인" title="구글로그인" /></li>
         <li><img src={img.symbol_kakao} alt="카카오로그인" title="카카오로그인" /></li>
       </div>

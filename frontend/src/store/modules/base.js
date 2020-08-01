@@ -23,7 +23,7 @@ const SET_LOGGED_INFO = 'base/SET_LOGGED_INFO';
 export const showModal = createAction(SHOW_MODAL);
 export const hideModal = createAction(HIDE_MODAL);
 export const login = createAction(LOGIN, api.login);
-export const nLogin = createAction(N_LOGIN);
+export const nLogin = createAction(N_LOGIN, api.nLogin);
 export const gLogin = createAction(G_LOGIN);
 export const kLogin = createAction(K_LOGIN);
 export const logout = createAction(LOGOUT, api.logout);
@@ -87,7 +87,12 @@ export default handleActions({
   ...pender({
     type: N_LOGIN,
     onSuccess: (state, action) => {
-      return ;
+      const { userId, userMemId } = action.payload.data;
+
+      return state.set('logged', true)
+                  .setIn(['loggedInfo', 'userId'], userId)
+                  .setIn(['loggedInfo', 'userMemId'], userMemId)
+                  .setIn(['loggedInfo', 'valid'], true);
     }
   }),
   ...pender({

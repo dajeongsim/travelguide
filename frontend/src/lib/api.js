@@ -10,6 +10,7 @@ export const toggleLike = ({targetId, type, userId, writerId, likes}) => axios.p
 export const onBlame = ({targetId, type, userId, writerId}) => axios.post('/api/post/blame', {targetId, type, userId, writerId});
 
 export const login = ({id, password}) => axios.post('/api/auth/login', {id, password});
+export const nLogin = ({code, state}) => axios.get(`/api/auth/nLogin/?${queryString.stringify({code, state})}`);
 export const logout = () => axios.post('/api/auth/logout');
 export const checkLogin = () => axios.get('/api/auth/checkLogin');
 
