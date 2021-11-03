@@ -27,7 +27,7 @@
     "redux-actions": "^2.6.4",
     "redux-pender": "^2.0.12",
     "summernote": "^0.8.11",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
