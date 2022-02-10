@@ -14,7 +14,7 @@
     "jquery": "^3.4.0",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "open-color": "^1.6.3",
     "popper.js": "^1.15.0",
     "query-string": "^6.5.0",
